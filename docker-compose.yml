@@ -2,12 +2,14 @@ version: '3'
 services:
   web:
     build: .
-    command: npm start
+    command: npm run dev
     ports:
       - "3001:3001"
     depends_on:
       - redis
       - geth
+    volumes:
+      - .:/app
   redis:
     image: "redis:alpine"
   geth:

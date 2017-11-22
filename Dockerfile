@@ -4,9 +4,14 @@ ENV NPM_CONFIG_LOGLEVEL warn
 COPY package.json ./
 
 RUN npm install
+RUN npm install -g nodemon
 
-COPY . ./
+RUN mkdir -p /app
+
+WORKDIR /app
+
+COPY . ./app
+
+WORKDIR .
 
 EXPOSE 3001
-
-CMD ["npm", "start"]
