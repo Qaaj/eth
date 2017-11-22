@@ -1,12 +1,11 @@
 FROM node:7.8.0
 ENV NPM_CONFIG_LOGLEVEL warn
 
-RUN mkdir -p /app
-WORKDIR /app
-
-COPY . /app
+COPY package.json ./
 
 RUN npm install
+
+COPY . ./
 
 EXPOSE 3001
 
