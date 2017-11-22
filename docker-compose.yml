@@ -1,0 +1,19 @@
+version: '3'
+services:
+  web:
+    build: .
+    command: npm start
+    ports:
+      - "3001:3001"
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+      - geth
+  redis:
+    image: "redis:alpine"
+  geth:
+    image: "makevoid/ethereum-geth-dev"
+    ports:
+     - 30303:30303
+     - 8545:8545
