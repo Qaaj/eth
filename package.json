@@ -8,7 +8,7 @@
     "dev": "nodemon -L index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Jan Jorissen",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^1.12.1"
@@ -17,5 +17,20 @@
     "express": "^4.16.2",
     "scrypt": "^6.0.3",
     "web3": "^1.0.0-beta.26"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Qaaj/eth.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Qaaj/eth/issues"
+  },
+  "homepage": "https://github.com/Qaaj/eth#readme",
+  "keywords": [
+    "ethereum",
+    "node",
+    "react",
+    "express",
+    "docker"g
+  ]
 }
