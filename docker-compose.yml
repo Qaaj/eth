@@ -6,14 +6,14 @@ services:
     ports:
       - "3001:3001"
     depends_on:
-      - redis
+#      - redis
       - geth
     volumes:
       - .:/app
-  redis:
-    image: "redis:alpine"
+#  redis:
+#    image: "redis:alpine"
   geth:
-    image: "makevoid/ethereum-geth-dev"
+    image: "mordhau/ethereum-geth-dev"
     ports:
      - 30303:30303
      - 8545:8545
