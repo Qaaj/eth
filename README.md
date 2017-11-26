@@ -1,6 +1,6 @@
 # eth
 
-Private Ethereum Network with React/Express dashboard for creating TX/Contracts
+Private Ethereum Network with Pug/Koa dashboard for analysing Addresses/TX/Contracts
 
 Added support for live-reloading in Docker container with nodemon
 
