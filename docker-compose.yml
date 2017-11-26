@@ -10,6 +10,7 @@ services:
       - geth
     volumes:
       - .:/app
+      - /app/node_modules
 #  redis:
 #    image: "redis:alpine"
   geth:
