@@ -1,18 +1,30 @@
 version: '3'
 services:
   web:
-    build: .
+    build: ./web
     command: npm run dev
     ports:
       - "3001:3001"
     depends_on:
-#      - redis
+      - redis
       - geth
+      - data
     volumes:
-      - .:/app
+      - ./web:/app
       - /app/node_modules
-#  redis:
-#    image: "redis:alpine"
+  data:
+      build: ./data
+      command: npm run dev
+      ports:
+        - "3000:3000"
+      depends_on:
+        - redis
+        - geth
+      volumes:
+        - ./data:/app
+        - /app/node_modules
+  redis:
+    image: "redis:alpine"
   geth:
     image: "mordhau/ethereum-geth-dev"
     ports:

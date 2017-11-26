@@ -1,0 +1,37 @@
+{
+  "name": "eth",
+  "version": "1.0.0",
+  "description": "Private Eth Devnet - Data Layer",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon -L -e js index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jan Jorissen",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  },
+  "dependencies": {
+    "koa": "^2.4.1",
+    "redis": "^2.8.0",
+    "scrypt": "^6.0.3",
+    "web3": "^1.0.0-beta.26"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Qaaj/eth.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Qaaj/eth/issues"
+  },
+  "homepage": "https://github.com/Qaaj/eth#readme",
+  "keywords": [
+    "ethereum",
+    "node",
+    "react",
+    "express",
+    "docker"
+  ]
+}

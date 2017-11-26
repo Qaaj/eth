@@ -1,11 +1,11 @@
 {
   "name": "eth",
   "version": "1.0.0",
-  "description": "Private Eth Devnet",
+  "description": "Private Eth Devnet - Web Layer",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon -L -e pug,css index.js",
+    "dev": "nodemon -L -e pug,css,js index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jan Jorissen",
@@ -16,8 +16,7 @@
   "dependencies": {
     "koa": "^2.4.1",
     "koa-pug": "^3.0.0-2",
-    "scrypt": "^6.0.3",
-    "web3": "^1.0.0-beta.26"
+    "redis": "^2.8.0"
   },
   "repository": {
     "type": "git",
