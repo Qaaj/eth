@@ -10,6 +10,4 @@ RUN npm install -g nodemon
 
 COPY . ./
 
-RUN ls -al node_modules
-
-EXPOSE 3001
+EXPOSE 3000
