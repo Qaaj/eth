@@ -2,20 +2,32 @@ extends layout.pug
 block header
     title Address #{coinbase}
 block content
+    script
+        include scripts/identicon.js
     .wrapper
         .main-content
             .blocks
                 table.ui.celled.striped.table
                     thead
-                        tr
-                            th(colspan='3')
+                         tr
+                            th(colspan='5')
                                 p Latest Blocks
                     tbody
                         each val in blocks
                             tr
                                 td.collapsing
-                                   p=val.blockheight
-                                td= val.hash + ' (Number of TX: ' + val.tx + ')'
+                                   div.identicon(title=val.hash)
+                                td.collapsing
+                                   div.blockheight=val.blockheight
+                                td
+                                    a(href='/block/'+val.hash)=val.hash
+                                if (val.tx == 1)
+                                    td
+                                        div.ui.basic.label(style="margin-right: 5")= val.tx + ' Transaction'
+                                else if(val.tx !== 1)
+                                    td
+                                        div.ui.basic.label(style="margin-right: 5")= val.tx + ' Transactions'
+
                                 td.right.aligned.collapsing= val.timestamp
 
 block foot
