@@ -1,26 +1,20 @@
 version: '2'
 services:
   web:
-    build: ./web
+    image: "mordhau/eth-web"
     ports:
-      - "3001:3001"
+      - 3001:3001
     depends_on:
       - redis
       - geth
       - data
-    volumes:
-      - ./web:/app
-      - /app/node_modules
   data:
-      build: ./data
+      image: "mordhau/eth-data"
       ports:
-        - "3000:3000"
+        - 3000:3000
       depends_on:
         - redis
         - geth
-      volumes:
-        - ./data:/app
-        - /app/node_modules
   redis:
     image: "redis:alpine"
   geth:
