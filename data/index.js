@@ -9,13 +9,22 @@ const sub = redis.createClient({host : 'redis'});
 const web3 = new Web3(new Web3.providers.HttpProvider("http://geth:8545"));
 
 sub.on("message", function (channel, message) {
-  const msg = message.split('&');
+  const msg = message.split('_______');
   const command = msg[0];
   const data = msg[1];
   const reply = msg[2];
-  
+
   if(command === 'coinbase') {
-    web3.eth.getCoinbase().then(value => pub.publish('web3',`${reply}&${value}`))
+    web3.eth.getCoinbase().then(value => pub.publish('web3',`${reply}_______${value}`))
+  }
+  if(command === 'blockheight') {
+    web3.eth.getBlockNumber().then(value => pub.publish('web3',`${reply}_______${value}`))
+  }
+  if(command === 'blocktxcount') {
+    web3.eth.getBlockTransactionCount(data).then(value => pub.publish('web3',`${reply}_______${value}`))
+  }
+  if(command === 'blockinfo') {
+    web3.eth.getBlock(data).then(value => pub.publish('web3',`${reply}_______${JSON.stringify(value)}`))
   }
 });
 

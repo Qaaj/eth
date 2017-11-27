@@ -4,6 +4,21 @@ block header
 block content
     .wrapper
         .main-content
-            h4.ui.header The coinbase of this chain is #{coinbase}
+            .blocks
+                table.ui.celled.striped.table
+                    thead
+                        tr
+                            th(colspan='3')
+                                p Latest Blocks
+                    tbody
+                        each val in blocks
+                            tr
+                                td.collapsing
+                                   p=val.blockheight
+                                td= val.hash + ' (Number of TX: ' + val.tx + ')'
+                                td.right.aligned.collapsing= val.timestamp
 
 block foot
+    .wrapper.bottombar
+        .padder
+            h4.ui.header The coinbase of this chain is #{coinbase}
