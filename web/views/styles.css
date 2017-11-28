@@ -29,7 +29,16 @@ bottombar{
 }
 
 .main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 900px;
+  max-width: 900px;
   padding: 10px;
   border-radius: 0px;
+}
+
+.ellipsis{
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

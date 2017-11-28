@@ -7,8 +7,8 @@ const {client} = require('../redis');
 
 module.exports = () => {
 
-  const doRequest = async (type, data = null) => {
-    
+  var doRequest = async (type, data = null) => {
+
     const config = {
       headers: {
         token: await client.getAsync('API_KEY')
@@ -44,9 +44,15 @@ module.exports = () => {
     ctx.render('index', {coinbase, blocks});
   });
 
-  router.get('/block/:hash', (ctx) => {
-    console.log(ctx.params.hash)
-    ctx.render('block', {hash: ctx.params.hash});
+  router.get('/block/:hash', async (ctx) => {
+    const block = await doRequest('blockinfo', ctx.params.hash);
+    const blockheight = await doRequest('blockheight')
+    ctx.render('block', { block });
+  });
+
+  router.get('/address/:hash', async (ctx) => {
+    const balance = await doRequest('balance', ctx.params.hash);
+    ctx.render('address', {address: ctx.params.hash, balance});
   });
 
   return router;
