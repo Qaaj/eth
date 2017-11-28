@@ -1,0 +1,17 @@
+extends layout.pug
+block header
+    title Address #{hash}
+block content
+    script
+        include scripts/identicon.js
+    .wrapper
+        .main-content
+            .blocks.wrapper.aligned
+                div.identicon(title=hash)
+                div(style="margin-left: 20px")
+                    h3 #{hash}
+
+block foot
+    .wrapper.bottombar
+        .padder
+

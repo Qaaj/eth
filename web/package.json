@@ -16,6 +16,7 @@
   "dependencies": {
     "koa": "^2.4.1",
     "koa-pug": "^3.0.0-2",
+    "koa-router": "^7.3.0",
     "moment": "^2.19.2",
     "redis": "^2.8.0"
   },

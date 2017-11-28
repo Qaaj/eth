@@ -24,6 +24,10 @@ bottombar{
   justify-content: center
 }
 
+.aligned {
+  align-items: center;
+}
+
 .main-content {
   width: 900px;
   padding: 10px;
