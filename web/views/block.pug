@@ -10,19 +10,17 @@ block content
                     thead
                         tr
                             th(colspan='5')
-                                span Block: #{block.hash}
+                                .wrapper.aligned(style="padding: 10px 0px")
+                                    div.identicon(title=block.hash)
+                                    div(style="margin-left: 10px") Block: #{block.hash}
                     tbody
+                        each val, index in block
                             tr
                                 td
-                                    div.identicon(title=block.hash)
+                                    p #{index}
 
-                            each val, index in block
-                                tr
-                                    td
-                                        p #{index}
-
-                                    td(style='max-width: 350px')
-                                        p(class="ellipsis") #{val}
+                                td(style='max-width: 350px')
+                                    p(class="ellipsis") #{val}
 
 block foot
     .wrapper.bottombar

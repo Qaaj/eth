@@ -3,6 +3,13 @@
   padding: 10px;
 }
 
+.identicon {
+  border-radius: 0px;
+  overflow:hidden;
+  -webkit-box-shadow: 0 0 10px 5px rgba(0,0,0,.05);
+  box-shadow: 0 0 10px 5px rgba(0,0,0,.05);
+}
+
 .blockheight{
   font-size: 16px;
 }
@@ -32,8 +39,8 @@ bottombar{
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 900px;
-  max-width: 900px;
+  width: 950px;
+  max-width: 950px;
   padding: 10px;
   border-radius: 0px;
 }
