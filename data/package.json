@@ -14,7 +14,9 @@
     "nodemon": "^1.12.1"
   },
   "dependencies": {
+    "bluebird": "^3.5.1",
     "koa": "^2.4.1",
+    "koa-body": "^2.5.0",
     "koa-router": "^7.3.0",
     "redis": "^2.8.0",
     "scrypt": "^6.0.3",

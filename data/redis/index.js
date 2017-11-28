@@ -1,4 +1,9 @@
 const redis = require("redis");
+const bluebird = require('bluebird');
+
+bluebird.promisifyAll(redis.RedisClient.prototype);
+
+// client.set('key', 'value!', 'EX', 10);
 
 const client = redis.createClient({host : 'redis'});
 const pub = redis.createClient({host : 'redis'});
