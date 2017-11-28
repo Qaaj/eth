@@ -3,7 +3,7 @@ services:
   web:
     image: "mordhau/eth-web"
     ports:
-      - 3001:3001
+      - 80:3001
     depends_on:
       - redis
       - geth
