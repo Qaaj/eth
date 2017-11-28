@@ -1,34 +1,39 @@
 const Router = require('koa-router');
 const moment = require('moment');
-const { pub, sub } = require('../redis');
+const axios = require('axios');
+
+
+const {client} = require('../redis');
 
 module.exports = () => {
 
-
-  const doRequest = (type,data = null) => new Promise((ok) => {
-    const rand = 'MSG_' + Math.round(Math.random()*100000000000);
-    sub.subscribe("web3");
-    sub.on("message", function (channel, message) {
-      const msg = message.split('_______');
-      const command = msg[0];
-      const data = msg[1];
-      if(command === rand) {
-        sub.unsubscribe();
-        ok(data)
+  const doRequest = async (type, data = null) => {
+    
+    const config = {
+      headers: {
+        token: await client.getAsync('API_KEY')
       }
-    });
-    pub.publish('web3', `${type}_______${data}_______${rand}`)
-  });
+    };
 
+    try {
+      const result = await axios.post(`http://data:3000/api/${type}`, { data }, config);
+      return result.data;
+    } catch (err) {
+      return "Error"
+    }
+  };
 
   const router = new Router();
 
   router.get('/', async (ctx) => {
+
     const coinbase = await doRequest('coinbase');
     const blockheight = await doRequest('blockheight')
+
     const blocks = [];
+
     for (i = blockheight; (i > -1 && i > blockheight - 5); i--) {
-      const info = JSON.parse(await doRequest('blockinfo', i));
+      const info = await doRequest('blockinfo', i);
       blocks.push({
         blockheight: i,
         hash: info.hash,
