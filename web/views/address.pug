@@ -1,0 +1,30 @@
+extends layout.pug
+block header
+    title Address #{block.hash}
+block content
+    script
+        include scripts/identicon.js
+    .wrapper
+        .main-content
+            table.ui.celled.striped.table
+                thead
+                    tr
+                        th(colspan='5')
+                            span Address: #{address.hash}
+                tbody
+                    tr
+                        td
+                            div.identicon(title=address.hash)
+
+                    each val, index in address
+                        tr
+                            td
+                                p #{index}
+
+                            td(style='max-width: 350px')
+                                p(class="ellipsis") #{val}
+
+block foot
+    .wrapper.bottombar
+        .padder
+

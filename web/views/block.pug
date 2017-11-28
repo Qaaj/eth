@@ -1,15 +1,28 @@
 extends layout.pug
 block header
-    title Address #{hash}
+    title Block #{block.hash}
 block content
     script
         include scripts/identicon.js
     .wrapper
         .main-content
-            .blocks.wrapper.aligned
-                div.identicon(title=hash)
-                div(style="margin-left: 20px")
-                    h3 #{hash}
+                table.ui.celled.striped.table
+                    thead
+                        tr
+                            th(colspan='5')
+                                span Block: #{block.hash}
+                    tbody
+                            tr
+                                td
+                                    div.identicon(title=block.hash)
+
+                            each val, index in block
+                                tr
+                                    td
+                                        p #{index}
+
+                                    td(style='max-width: 350px')
+                                        p(class="ellipsis") #{val}
 
 block foot
     .wrapper.bottombar
