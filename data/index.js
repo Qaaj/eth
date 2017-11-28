@@ -1,11 +1,8 @@
 const Koa = require('koa');
 const app = new Koa();
 const Web3 = require('web3');
-const redis = require("redis");
 
-// const client = redis.createClient({host : 'redis'});
-const pub = redis.createClient({host : 'redis'});
-const sub = redis.createClient({host : 'redis'});
+const { pub, sub } = require('./redis');
 const web3 = new Web3(new Web3.providers.HttpProvider("http://geth:8545"));
 
 sub.on("message", function (channel, message) {

@@ -1,8 +1,8 @@
 const Router = require('koa-router');
 const moment = require('moment');
+const { pub, sub } = require('../redis');
 
-
-module.exports = (pub, sub) => {
+module.exports = () => {
 
 
   const doRequest = (type,data = null) => new Promise((ok) => {
