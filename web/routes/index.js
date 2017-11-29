@@ -50,6 +50,10 @@ module.exports = () => {
     ctx.render('block', { block });
   });
 
+  router.get('/404', async (ctx) => {
+    ctx.render('404');
+  });
+
   router.get('/search/:hash', async (ctx) => {
     console.log(ctx.params.hash)
     const result = await doRequest('search', ctx.params.hash);
