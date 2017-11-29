@@ -1,0 +1,64 @@
+extends layout.pug
+block header
+    title Tx #{tx.hash}
+block content
+    script
+        include scripts/identicon.js
+    .wrapper
+        .main-content
+            table.ui.celled.striped.table
+                thead
+                    tr
+                        th(colspan='3')
+                            .wrapper.aligned(style="padding: 10px 0px")
+                                div(style="margin-left: 10px") Transaction #{tx.hash}
+                tbody
+                    tr
+                        td
+                            div Value
+                            div(class="ellipsis") #{tx.value / 1000000000000000000} ETH
+
+                        td
+                            div From
+                            a(href='/address/' + tx.from) #{tx.from}
+
+
+
+                        td
+                            div To
+                            a(href='/address/' + tx.to) #{tx.to}
+
+            table.ui.celled.striped.table
+                thead
+                    tr
+                        th(colspan='3')
+                            .wrapper.aligned(style="padding: 10px 0px")
+                                div(style="margin-left: 10px")
+                                    span Block
+                                    a(href='/block/' + tx.blockHash) #{tx.blockHash}
+
+            table.ui.celled.striped.table
+                thead
+                    tr
+                        th(colspan='3')
+                            .wrapper.aligned(style="padding: 10px 0px")
+                                div(style="margin-left: 10px") Transaction Properties
+                tbody
+                each val, index in tx
+                    tr
+                        td
+                            p #{index}
+
+                        td(colspan='2' style='max-width: 350px')
+                            p(class="ellipsis") #{val}
+
+
+
+
+
+
+
+block foot
+    .wrapper.bottombar
+        .padder
+

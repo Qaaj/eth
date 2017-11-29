@@ -1,6 +1,6 @@
 extends layout.pug
 block header
-    title Address #{block.hash}
+    title Address #{address}
 block content
     script
         include scripts/identicon.js
@@ -10,19 +10,24 @@ block content
                 thead
                     tr
                         th(colspan='5')
-                            span Address: #{address.hash}
+                            div(style='display: flex; align-items: center;')
+                                div.identicon(title=address)
+                                span(style='margin-left: 1em;') Address: #{address}
                 tbody
                     tr
                         td
-                            div.identicon(title=address.hash)
+                            div Balance
 
-                    each val, index in address
-                        tr
-                            td
-                                p #{index}
+                        td
+                            div #{balance} ETH
+                    tr
+                        td
+                            div No. Of Transactions
 
-                            td(style='max-width: 350px')
-                                p(class="ellipsis") #{val}
+                        td
+                            div #{transactionCount} txns
+
+
 
 block foot
     .wrapper.bottombar
