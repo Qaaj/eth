@@ -50,6 +50,17 @@ module.exports = () => {
     ctx.render('block', { block });
   });
 
+  router.get('/404', async (ctx) => {
+    ctx.render('404');
+  });
+
+  router.get('/search/:hash', async (ctx) => {
+    console.log(ctx.params.hash)
+    const result = await doRequest('search', ctx.params.hash);
+    console.log(result);
+    ctx.render('search', {result});
+  });
+
   router.get('/address/:hash', async (ctx) => {
     const balance = await doRequest('balance', ctx.params.hash);
     ctx.render('address', {address: ctx.params.hash, balance});
