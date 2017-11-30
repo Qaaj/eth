@@ -4,17 +4,31 @@ block header
 block content
     script
         include scripts/identicon.js
+        include scripts/index.js
     .wrapper
         .main-content
             h2.ui.center.aligned.icon.header
                 i.money.circular.icon
-                if(result)
-                     h3  Success! Your transaction for 500 ETH is pending. Follow it here:
-                     a(href='/tx/' + result)
-                        p #{result}
+                if(!error)
+                    h3  Success! Your transaction for 500 ETH is pending. Follow it here:
+                    a(href='/tx/' + data)
+                        p #{data}
                 else
                     h3 Something went wrong requesting your ETH.
-                    p Did you already make a request in the last 24h?
+                    .ui.error.messages(style="max-width: 600px")
+                        p #{error}
+                            if(hash)
+                                p
+                                    a(href='/tx/' + hash) #{hash}
+            if(!error)
+                h3  Want more?
+            else
+                h3 Try again
+            p Note that Requests are limited to 500 ETH per Address per day.
+            .faucet
+                .ui.action.input
+                    input(type='text', placeholder='Address', style='width:400px', id='faucet_input')
+                    button.ui.button(id='faucet') Request
 
 block foot
     .wrapper.bottombar

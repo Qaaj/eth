@@ -50,8 +50,8 @@ module.exports = () => {
     router.get('/block/:hash', async (ctx) => {
         const block = await doRequest('blockinfo', ctx.params.hash);
         const blockheight = await doRequest('blockheight');
-
-        ctx.render('block', {block, blockheight});
+        const mined = moment.unix(block.timestamp).fromNow();
+        ctx.render('block', {block, blockheight, mined});
     });
 
     router.get('/404', async (ctx) => {
@@ -60,7 +60,6 @@ module.exports = () => {
 
     router.get('/search/:hash', async (ctx) => {
         const result = await doRequest('search', ctx.params.hash);
-        console.log(result);
         ctx.render('search', {result});
     });
 
@@ -76,8 +75,8 @@ module.exports = () => {
     });
 
     router.get('/faucet/:address', async (ctx) => {
-        const result = await doRequest('requestFaucet', ctx.params.address);
-        ctx.render('faucet', {result});
+        const {data, error, hash} = await doRequest('requestFaucet', ctx.params.address);
+        ctx.render('faucet', {data, error, hash});
     });
 
 

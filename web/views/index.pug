@@ -1,12 +1,15 @@
 extends layout.pug
 block header
     title Address #{coinbase}
+block searchbar
+    include searchbar
 block content
     script
         include scripts/index.js
         include scripts/identicon.js
     .wrapper
         .main-content
+            h1 Blockshift
             .blocks
                 table.ui.celled.striped.table
                     thead
@@ -30,6 +33,7 @@ block content
                                         div.ui.basic.label(style="margin-right: 5")= val.tx + ' Transactions'
 
                                 td.right.aligned.collapsing= val.timestamp
+
             h3 Ether Faucet
             p Enter your Ethereum address here to receive 500 ETH from the faucet
             p Requests are limited to 500 ETH per Day
@@ -40,6 +44,6 @@ block content
 
 
 block foot
-    .wrapper.bottombar
+    .wrapper
         .padder
-            h4.ui.header The coinbase of this chain is #{coinbase}
+            h5.ui.header The coinbase of this chain is #{coinbase}
