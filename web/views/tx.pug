@@ -11,31 +11,25 @@ block content
                     tr
                         th(colspan='3')
                             .wrapper.aligned(style="padding: 10px 0px")
-                                div(style="margin-left: 10px") Transaction #{tx.hash}
+                                h3(style="margin-left: 10px") Transaction: #{tx.hash}
                 tbody
                     tr
                         td
-                            div Value
                             div(class="ellipsis") #{tx.value / 1000000000000000000} ETH
-
-                        td
-                            div From
+                        td.wrapper
                             a(href='/address/' + tx.from) #{tx.from}
-
-
-
-                        td
-                            div To
+                            i(style="margin: 0px 10px; position: relative; top: -2px").large.fa-arrow-right.icon.green
                             a(href='/address/' + tx.to) #{tx.to}
-
             table.ui.celled.striped.table
                 thead
                     tr
                         th(colspan='3')
                             .wrapper.aligned(style="padding: 10px 0px")
                                 div(style="margin-left: 10px")
-                                    span Block
-                                    a(href='/block/' + tx.blockHash) #{tx.blockHash}
+                                    .wrapper.aligned(style="padding: 10px 0px")
+                                        div.identicon(title=tx.blockHash)
+                                        div(style="margin-left: 10px")
+                                            a(href="/block/" + tx.blockHash) Block: #{tx.blockHash}
 
             table.ui.celled.striped.table
                 thead
@@ -50,7 +44,10 @@ block content
                             p #{index}
 
                         td(colspan='2' style='max-width: 350px')
-                            p(class="ellipsis") #{val}
+                            if(index == 'from' || index == 'to')
+                                a(href='/address/' +val) #{val}
+                            else
+                                p.ellipsis #{val}
 
 
 
