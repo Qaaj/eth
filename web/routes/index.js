@@ -46,8 +46,9 @@ module.exports = () => {
 
   router.get('/block/:hash', async (ctx) => {
     const block = await doRequest('blockinfo', ctx.params.hash);
-    const blockheight = await doRequest('blockheight')
-    ctx.render('block', { block });
+    const blockheight = await doRequest('blockheight');
+
+    ctx.render('block', { block, blockheight });
   });
 
   router.get('/404', async (ctx) => {
@@ -55,15 +56,20 @@ module.exports = () => {
   });
 
   router.get('/search/:hash', async (ctx) => {
-    console.log(ctx.params.hash)
     const result = await doRequest('search', ctx.params.hash);
     console.log(result);
     ctx.render('search', {result});
   });
 
   router.get('/address/:hash', async (ctx) => {
-    const balance = await doRequest('balance', ctx.params.hash);
-    ctx.render('address', {address: ctx.params.hash, balance});
+    const balance = await doRequest('getBalance', ctx.params.hash);
+    const transactionCount = await doRequest('getTransactionCount', ctx.params.hash);
+    ctx.render('address', {address: ctx.params.hash, balance, transactionCount});
+  });
+
+  router.get('/tx/:hash', async (ctx) => {
+    const tx = await doRequest('getTransaction', ctx.params.hash);
+    ctx.render('tx', {tx});
   });
 
   return router;

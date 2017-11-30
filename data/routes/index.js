@@ -46,10 +46,32 @@ const handleRequest = async (ctx) => {
     }
   }
 
+  if (ctx.params.detail === 'getTransaction') {
+    try{
+      const tx = await web3.eth.getTransaction(data);
+      return ctx.body = tx;
+    }catch(err){
+      return ctx.body = '/404';
+    }
+  }
+
   // Address
-  if (ctx.params.detail === 'balance') {
-    const balance = await web3.eth.getBalance(data);
-    return ctx.body = await web3.utils.fromWei(balance, 'ether');
+  if (ctx.params.detail === 'getBalance') {
+    try {
+      const balance = await web3.eth.getBalance(data);
+      return ctx.body = await web3.utils.fromWei(balance, 'ether');
+    }catch(err){
+      return ctx.body = '/404';
+    }
+  }
+
+  if (ctx.params.detail === 'getTransactionCount') {
+    try {
+      const count = await web3.eth.getTransactionCount(data);
+      return ctx.body = count;
+    }catch(err){
+      return ctx.body = '/404';
+    }
   }
 
   ctx.body = "Authorised";
