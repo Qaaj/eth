@@ -6,29 +6,36 @@ block content
         include scripts/identicon.js
     .wrapper
         .main-content
+            h2.ui.center.aligned.icon.header
+                i.fa-th.icon
+                |   Block #{block.number}
+            table.ui.celled.striped.table
+                thead
+                    tr
+                        th(colspan='5')
+                            .wrapper.aligned(style="padding: 10px 0px")
+                                div.identicon(title=block.hash)
+                                div(style="margin-left: 10px") #{block.hash}
+                tbody
+                    each val, index in block
+                        tr
+                            td
+                                p #{index}
+
+                            td(style='max-width: 350px')
+                                p(class="ellipsis") #{val}
+
+
                 table.ui.celled.striped.table
                     thead
                         tr
                             th(colspan='5')
                                 .wrapper.aligned(style="padding: 10px 0px")
-                                    div.identicon(title=block.hash)
-                                    div(style="margin-left: 10px") Block #{block.hash}
-                    tbody
-                        each val, index in block
-                            tr
-                                td
-                                    p #{index}
-
-                                td(style='max-width: 350px')
-                                    p(class="ellipsis") #{val}
-
-
-                    table.ui.celled.striped.table
-                        thead
-                            tr
-                                th(colspan='5')
-                                    .wrapper.aligned(style="padding: 10px 0px")
-                                        div(style="margin-left: 10px") (#{block.transactions.length}) Transactions
+                                    if (block.transactions.length == 1)
+                                        h3 #{block.transactions.length} Transaction
+                                    else
+                                        h3 #{block.transactions.length} Transactions
+                    if (block.transactions.length > 0)
                         tbody
                             tr
                                 th
@@ -44,7 +51,9 @@ block content
                                             a(href='/block/' + block.hash) #{block.hash}
 
                                     td(style='max-width: 350px')
-                                        a(href='/tx/' + val) #{val}
+                                        .wrapper.aligned(style="padding: 10px 0px")
+                                            div
+                                                a(href='/tx/' + val) #{val}
 block foot
     .wrapper.bottombar
         .padder

@@ -6,6 +6,9 @@ block content
         include scripts/identicon.js
     .wrapper
         .main-content
+            h2.ui.center.aligned.icon.header
+                i.exchange.icon
+                |   Transaction for #{tx.value / 1000000000000000000} ETH
             table.ui.celled.striped.table
                 thead
                     tr
