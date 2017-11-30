@@ -1,0 +1,22 @@
+extends layout.pug
+block header
+    title Address #{address}
+block content
+    script
+        include scripts/identicon.js
+    .wrapper
+        .main-content
+            h2.ui.center.aligned.icon.header
+                i.money.circular.icon
+                if(result)
+                     h3  Success! Your transaction for 500 ETH is pending. Follow it here:
+                     a(href='/tx/' + result)
+                        p #{result}
+                else
+                    h3 Something went wrong requesting your ETH.
+                    p Did you already make a request in the last 24h?
+
+block foot
+    .wrapper.bottombar
+        .padder
+

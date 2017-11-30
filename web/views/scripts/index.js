@@ -1,13 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
-  document.removeEventListener("DOMContentLoaded", this);
+    document.removeEventListener("DOMContentLoaded", this);
 
-  var btnGo = document.getElementById('btnGo');
+    document.getElementById('btnGo').addEventListener('click', () => {
+        var txtInput = document.getElementById('txtTopHeaderInput');
+        window.location = '/search/' + txtInput.value;
+    });
 
-  btnGo.addEventListener('click', (data) => {
-    var txtInput = document.getElementById('txtTopHeaderInput');
-
-    console.log('Txt input value = ', txtInput.value);
-    window.location = '/search/' + txtInput.value;
-  });
+    document.getElementById('faucet').addEventListener('click', () => {
+        var txtInput = document.getElementById('faucet_input');
+        window.location = '/faucet/' + txtInput.value;
+    });
 
 });

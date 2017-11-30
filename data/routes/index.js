@@ -11,6 +11,22 @@ const handleRequest = async (ctx) => {
   if (ctx.params.detail === 'coinbase') {
     return ctx.body = await web3.eth.getCoinbase();
   }
+  if (ctx.params.detail === 'requestFaucet') {
+      const coinbase = await web3.eth.getCoinbase();
+      try {
+          const nok = await client.getAsync('faucet:' + data);
+          if(nok) throw new Error();
+          const result = await web3.eth.sendTransaction({
+              from: coinbase,
+              to: data,
+              value: "500000000000000000000"
+          });
+          client.set('faucet:'+data, true, 'EX', 60 * 60 * 24);
+          return ctx.body = result.transactionHash;
+      }catch(err){
+        return ctx.body = false;
+      }
+  }
   if (ctx.params.detail === 'blockheight') {
     return ctx.body = await  web3.eth.getBlockNumber()
   }
