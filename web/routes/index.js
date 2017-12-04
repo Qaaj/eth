@@ -4,10 +4,16 @@ const axios = require('axios');
 
 
 const {client} = require('../redis');
+const {checkRedisMiddleware, checkRedisHelper} = require('../redis/helpers');
 
-// TODO: Caching for this method
+const checkRedis = checkRedisHelper(client);
+const preCheckRedis = checkRedisMiddleware(client);
 
 const doRequest = async (type, data = null) => {
+
+    // Check Redis
+    const cached = checkRedis(type, data);
+
     const config = {
         headers: {
             token: await client.getAsync('API_KEY')
@@ -25,8 +31,6 @@ const doRequest = async (type, data = null) => {
 module.exports = () => {
 
     const router = new Router();
-
-    // Homepage
 
     router.get('/', async (ctx) => {
 
@@ -47,11 +51,10 @@ module.exports = () => {
         ctx.render('index', {coinbase, blocks});
     });
 
-    router.get('/block/:hash', async (ctx) => {
+    router.get('/block/:hash', preCheckRedis('blockinfo'), async (ctx) => {
         const block = await doRequest('blockinfo', ctx.params.hash);
-        const blockheight = await doRequest('blockheight');
         const mined = moment.unix(block.timestamp).fromNow();
-        ctx.render('block', {block, blockheight, mined});
+        ctx.render('block', {block, mined});
     });
 
     router.get('/404', async (ctx) => {

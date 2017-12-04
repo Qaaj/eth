@@ -42,10 +42,8 @@ const handleRequest = async (ctx) => {
         return ctx.body = blocktxcount;
     }
     if (ctx.params.detail === 'blockinfo') {
-        const blockinfo = await client.getAsync('blocks:' + data);
-        if (blockinfo) return ctx.body = JSON.parse(blockinfo);
         const info = await web3.eth.getBlock(data);
-        client.set('blocks:' + data, JSON.stringify(info), 'EX', DAY);
+        client.set('blocks:' + data, JSON.stringify(info), 'EX', DAY); // Technically data never changes but for debugging purposes 24h cache
         return ctx.body = info;
     }
     if (ctx.params.detail === 'search') {

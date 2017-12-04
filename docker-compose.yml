@@ -23,6 +23,8 @@ services:
         - /app/node_modules
   redis:
     image: "redis:alpine"
+    ports:
+        - 6379:6379
   geth:
     image: "mordhau/ethereum-geth-dev"
     volumes:
