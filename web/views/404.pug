@@ -2,13 +2,13 @@ extends layout.pug
 block header
     title Address #{coinbase}
 block content
-    script
-        include scripts/index.js
-        include scripts/identicon.js
     .wrapper
         .main-content
-            h1 Nothing here!
-
-
+            if (!error)
+                h1 Nothing here!
+            else
+                h1 Oops!
+                    h3 #{error}
+                    
 block foot
     .empty

@@ -1,87 +1,51 @@
 const Router = require('koa-router');
 const moment = require('moment');
-const axios = require('axios');
 
+const {prefetchData} = require('../redis/helpers');
+const {doRequest} = require('../api');
 
 const {client} = require('../redis');
-const {checkRedisMiddleware, checkRedisHelper} = require('../redis/helpers');
-
-const checkRedis = checkRedisHelper(client);
-const preCheckRedis = checkRedisMiddleware(client);
-
-const doRequest = async (type, data = null) => {
-
-    // Check Redis
-    const cached = checkRedis(type, data);
-
-    const config = {
-        headers: {
-            token: await client.getAsync('API_KEY')
-        }
-    };
-
-    try {
-        const result = await axios.post(`http://data:3000/api/${type}`, {data}, config);
-        return result.data;
-    } catch (err) {
-        return "Error"
-    }
-};
+const doApiCall = doRequest(client);
+const prefetch = prefetchData(client);
 
 module.exports = () => {
 
-    const router = new Router();
+  const router = new Router();
 
-    router.get('/', async (ctx) => {
+  router.get('/', prefetch('home'), async (ctx) => {
+    const { blocks, coinbase } = ctx.request;
+    ctx.render('index', {coinbase, blocks});
+  });
 
-        const coinbase = await doRequest('coinbase');
-        const blockheight = await doRequest('blockheight')
+  router.get('/block/:hash', prefetch('blockinfo'), async (ctx) => {
+    const block = ctx.request.blockinfo;
+    const mined = moment.unix(block.timestamp).fromNow();
+    ctx.render('block', {block, mined});
+  });
 
-        const blocks = [];
+  router.get('/404', async (ctx) => {
+    ctx.render('404');
+  });
 
-        for (i = blockheight; (i > -1 && i > blockheight - 5); i--) {
-            const info = await doRequest('blockinfo', i);
-            blocks.push({
-                blockheight: i,
-                hash: info.hash,
-                timestamp: info.timestamp == 0 ? 'Genesis' : moment.unix(info.timestamp).fromNow(),
-                tx: info.transactions.length //await doRequest('blocktxcount', i)
-            });
-        }
-        ctx.render('index', {coinbase, blocks});
-    });
+  router.get('/search/:hash', prefetch('search'), async (ctx) => {
+    const  { redirect } = ctx.request;
+    ctx.render('search', {result: redirect});
+  });
 
-    router.get('/block/:hash', preCheckRedis('blockinfo'), async (ctx) => {
-        const block = await doRequest('blockinfo', ctx.params.hash);
-        const mined = moment.unix(block.timestamp).fromNow();
-        ctx.render('block', {block, mined});
-    });
+  router.get('/address/:hash', prefetch('address'), async (ctx) => {
+    const { address, balance, transactionCount } = ctx.request;
+    ctx.render('address', {address, balance, transactionCount});
+  });
 
-    router.get('/404', async (ctx) => {
-        ctx.render('404');
-    });
+  router.get('/tx/:hash', prefetch('tx'), async (ctx) => {
+    const  { tx } = ctx.request;
+    ctx.render('tx', {tx});
+  });
 
-    router.get('/search/:hash', async (ctx) => {
-        const result = await doRequest('search', ctx.params.hash);
-        ctx.render('search', {result});
-    });
+  router.get('/faucet/:address', async (ctx) => {
+    const {data, error, hash} = await doApiCall('requestFaucet', ctx.params.address);
+    ctx.render('faucet', {data, error, hash});
+  });
 
-    router.get('/address/:hash', async (ctx) => {
-        const balance = await doRequest('getBalance', ctx.params.hash);
-        const transactionCount = await doRequest('getTransactionCount', ctx.params.hash);
-        ctx.render('address', {address: ctx.params.hash, balance, transactionCount});
-    });
-
-    router.get('/tx/:hash', async (ctx) => {
-        const tx = await doRequest('getTransaction', ctx.params.hash);
-        ctx.render('tx', {tx});
-    });
-
-    router.get('/faucet/:address', async (ctx) => {
-        const {data, error, hash} = await doRequest('requestFaucet', ctx.params.address);
-        ctx.render('faucet', {data, error, hash});
-    });
-
-
-    return router;
+  return router;
 };
