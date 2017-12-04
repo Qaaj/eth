@@ -13,7 +13,7 @@ module.exports = () => {
   const router = new Router();
 
   router.get('/', prefetch('home'), async (ctx) => {
-    const { blocks, coinbase } = ctx.request;
+    const {blocks, coinbase} = ctx.request;
     ctx.render('index', {coinbase, blocks});
   });
 
@@ -28,17 +28,17 @@ module.exports = () => {
   });
 
   router.get('/search/:hash', prefetch('search'), async (ctx) => {
-    const  { redirect } = ctx.request;
+    const {redirect} = ctx.request;
     ctx.render('search', {result: redirect});
   });
 
   router.get('/address/:hash', prefetch('address'), async (ctx) => {
-    const { address, balance, transactionCount } = ctx.request;
+    const {address, balance, transactionCount} = ctx.request;
     ctx.render('address', {address, balance, transactionCount});
   });
 
   router.get('/tx/:hash', prefetch('tx'), async (ctx) => {
-    const  { tx } = ctx.request;
+    const {tx} = ctx.request;
     ctx.render('tx', {tx});
   });
 
