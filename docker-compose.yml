@@ -29,8 +29,10 @@ services:
     image: "mordhau/ethereum-geth-dev"
     volumes:
       - blockchain:/app/blockchain
+      - ethash:/~/.ethash
     ports:
       - 30303:30303
       - 8545:8545
 volumes:
   blockchain:
+  ethash:
