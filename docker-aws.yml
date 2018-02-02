@@ -18,12 +18,14 @@ services:
   redis:
     image: "redis:alpine"
   geth:
-    image: "mordhau/ethereum-geth-dev"
+    image: "mordhau/ethereum-geth-dev:144"
     cpu_shares: 80
     volumes:
       - blockchain:/app/blockchain
+      - ethash:/~/.ethash
     ports:
       - 30303:30303
       - 8545:8545
 volumes:
   blockchain:
+  ethash:

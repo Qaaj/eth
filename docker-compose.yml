@@ -26,7 +26,7 @@ services:
     ports:
         - 6379:6379
   geth:
-    image: "mordhau/ethereum-geth-dev"
+    image: "mordhau/ethereum-geth-dev:144"
     volumes:
       - blockchain:/app/blockchain
       - ethash:/~/.ethash
